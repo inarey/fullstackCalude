@@ -81,7 +81,7 @@ function App() {
 
       {/* Cart Sidebar - Only shows when isCartOpen is true */}
       {isCartOpen && (
-        <div className="fixed right-0 stop-0 h-full w-96 bg-white shadow-2xl p-6 overflow-y-auto">
+        <div className="fixed right-0 top-0 h-full w-96 bg-white shadow-2xl p-6 overflow-y-auto">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold">Shopping cart</h2>
           <button 
@@ -91,7 +91,7 @@ function App() {
         </div>
 
         {/* Show message if cart is empty */}
-        {cart.lenth === 0? (
+        {cart.length === 0? (
           <p className="text-gray-500">Your cart is empty</p> ) : (
             <>
             {/* List all cart items</> */}
