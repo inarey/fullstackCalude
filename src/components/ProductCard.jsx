@@ -6,13 +6,11 @@ const ProductCard = ({product, onAddToCart}) => {
   // Function to handle add to cart with quantity
   const handleAddToCart = () => {
     //add the product quantity to the cart
-    for (let i = 0; i < quantity; i++) {
-      onAddToCart(product)
-    }
-
+    onAddToCart(product, quantity)
     // reset quantity to 1 after adding to cart
     setQuantity(1)
-  }
+    }
+  
 
   return (
     <div className='border p-4 rounded-lg'>

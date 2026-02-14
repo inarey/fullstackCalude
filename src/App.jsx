@@ -8,8 +8,19 @@ function App() {
   const [searchTerm, setSearchTerm] = useState("")  // Track search input
 
   // Function to add product to cart
-  const addToCart = (product) => {
-    setCart([...cart, product])
+  const addToCart = (product, quantity) => {
+    // check if product already exists in cart
+    const existingIndex = cart.findIndex(item => item.product.id === product.id)
+
+    if (existingIndex !== -1) {
+      //product exists - update quantity
+      const newCart = [...cart]
+      newCart[existingIndex].quantity += quantity
+      setCart(newCart)
+    } else {
+      // new product - add with quantity
+      setCart([...cart, {product, quantity}])
+    }
   }
 
   // Toggle cart open/close
@@ -25,11 +36,8 @@ function App() {
 
   // Calculate total price
   const totalPrice = cart.reduce((sum, item) => {
-    return sum + (Number(item.price) || 0)
+    return sum + (Number(item.product.price) * item.quantity || 0)
   }, 0)
-
-  console.log("Cart:", cart)
-  console.log("Total Price:", totalPrice)
 
   // Sample product data
   const products = [
@@ -124,13 +132,13 @@ function App() {
           <p className="text-gray-500">Your cart is empty</p> ) : (
             <>
             {/* List all cart items</> */}
-            <div className="space-y-4 mb-6">
               {cart.map((item, index) => (
                 <div key={index} className="border p-4 rounded-lg">
                   <div className="flex justify-between items-start mb-2">
                     <h3 className="font-bold">{item.name}</h3>
                     <p className="font-bold">{item.price}</p>
-                    </div>                    <button 
+                    </div>                    
+                    <button 
                       onClick={() => removeFromCart(index)}
                       className="text-red-500 hover:text-red-700"
                     >
@@ -138,7 +146,6 @@ function App() {
                     </button>
                 </div>
               ))}
-            </div>
 
               {/* Total Price */}
               <div className="border-t pt-4">
